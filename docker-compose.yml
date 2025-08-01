@@ -1,0 +1,18 @@
+services:
+  nocodb:
+    image: nocodb/nocodb:0.264.2
+    container_name: nocodb
+    ports:
+      - "8080:8080"
+    environment:
+      NC_PUBLIC_URL: "https://process.archives.albany.edu/nocodb"
+      NC_AUTH_JWT_SECRET: ${NC_AUTH_JWT_SECRET}
+      NC_LOG_LEVEL: info
+    volumes:
+      - ./nc_data:/usr/app/data
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
